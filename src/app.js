@@ -5,7 +5,8 @@ import { fetchUserData } from './utils/api.js';
 const app = document.getElementById('app');
 
 const isAuthenticated = () => {
-  return localStorage.getItem('jwt') !== null;
+  let jwt = localStorage.getItem('jwt');
+  return jwt !== null && jwt !== "undefined"
 };
 
 const init = async () => {

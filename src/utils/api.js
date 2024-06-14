@@ -1,6 +1,6 @@
 export const fetchUserData = async () => {
     const jwt = localStorage.getItem('jwt');
-    const response = await fetch('https://((DOMAIN))/api/graphql-engine/v1/graphql', {
+    const response = await fetch('https://learn.zone01dakar.sn/api/graphql-engine/v1/graphql', {
       method: 'POST',
       headers: {
         'Authorization': 'Bearer ' + jwt,
@@ -12,7 +12,6 @@ export const fetchUserData = async () => {
             user {
               id
               login
-              // add other fields as needed
             }
           }
         `

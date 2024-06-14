@@ -1,8 +1,9 @@
 import { fetchUserData } from '../utils/api.js';
+import { showProfile } from './profile.js';
 
 export const showLoginForm = () => {
     const app = document.getElementById('app');
-    app.innerHTML = `
+    app.innerHTML = /*html*/`
     <form id="loginForm">
       <input type="text" id="username" placeholder="Username or Email" required />
       <input type="password" id="password" placeholder="Password" required />
@@ -32,12 +33,12 @@ const authenticate = async (username, password) => {
         method: 'POST',
         headers: {
             'Authorization': 'Basic ' + btoa(`${username}:${password}`),
-            'Content-Type': 'application/json'
+            // 'Content-Type': 'application/json'
         }
     });
     const data = await response.json();
     if (response.ok) {
-        return data.token;
+        return data;
     } else {
         throw new Error('Authentication failed');
     }
