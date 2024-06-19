@@ -1,149 +1,59 @@
-body {
-  font-family: 'Arial', sans-serif;
-  background-color: #f0f0f0;
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  height: 100vh;
-  margin: 0;
+#app {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(217, 217, 217);
+    margin: 0;
 }
 
-
-.container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-evenly;
+#main-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    height: 92vh;
+    width: 95vw;
+    border-radius: 60px;
+    gap: 10px;
+    background-color: rgb(238, 241, 242);
+    border: 15px solid rgb(200, 235, 245);
 }
 
-.slideshow-container {
-  position: relative;
-  width: 500px;
-  max-width: 500px;
-  margin: 20px auto;
-  overflow: hidden;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
-  border-radius: 10px;
-  flex: 1;
+#menu-section {
+    width: 6%;
+    height: 96%;
+    margin-left: 1%;
+    border-radius: 30px;
+    box-shadow: 0 2px 8px 2px rgba(0, 0, 0, 0.5);
+    background-color: rgb(200, 235, 245);
 }
 
-.mySlides {
-  display: none;
+#main-section {
+    width: 68%;
+    height: 100%;
+    display: flex;
+    gap: 2%;
+    flex-direction: column;
 }
 
-.fade {
-  animation-name: fade;
-  animation-duration: 2s;
+#header-bar{
+    width: 100%;
+    height: 40%;
+    background-color: black;
 }
 
-@keyframes fade {
-  from {opacity: .4}
-  to {opacity: 1}
+#graph-section{
+    width: 100%;
+    height: 57%;
+    background-color: green;
 }
 
-.card {
-  background: #fff;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.card h3 {
-  margin-top: 0;
-}
-
-.card ul {
-  padding-left: 20px;
-}
-
-.login-form {
-  width: 100%;
-  max-width: 300px;
-  background: #fff;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  margin-right: 50px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.login-form:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
-}
-
-.login-form h1 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.login-form h4 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-#line {
-  display: flex;
-  margin: auto;
-  height: 2px;
-  width: 200px;
-  border-radius: 60px;
-  background-color: blue;
-  box-shadow: 0 0 5px blue, 0 0 10px blue, 0 0 20px blue, 0 0 30px blue, 0 0 40px blue, 0 0 50px blue, 0 0 60px blue;
-  animation: neon 3s infinite alternate;
-}
-
-@keyframes neon {
-  from {
-      box-shadow: 0 0 5px blue, 0 0 10px blue, 0 0 20px blue, 0 0 30px blue, 0 0 40px blue, 0 0 50px blue, 0 0 60px blue;
-  }
-  to {
-      box-shadow: 0 0 10px blue, 0 0 20px blue, 0 0 30px blue, 0 0 40px blue, 0 0 50px blue, 0 0 60px blue, 0 0 70px blue;
-  }
-}
-
-.input-group {
-  margin-bottom: 20px;
-}
-
-.input-group input {
-  width: 91%;
-  padding: 12px;
-  font-size: larger;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.input-group input:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
-  outline: none;
-}
-
-.login-button {
-  width: 100%;
-  padding: 10px;
-  font-size: large;
-  font-weight: bolder;
-  margin-top: 20px;
-  background: #007bff;
-  border: none;
-  color: #fff;
-  border-radius: 5px;
-  cursor: pointer;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
-  transition: background 0.3s ease;
-}
-
-.login-button:hover {
-  background: #0056b3;
-}
-
-.error-message {
-  color: red;
-  text-align: center;
-  margin-top: 10px;
+#profile-section {
+    width: 25%;
+    height: 100%;
+    border-radius: 0 48px 48px 0;
+    box-shadow: 0 2px 6px 1px rgba(0, 0, 0, 0.5);
+    background-color: white;
 }

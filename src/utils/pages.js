@@ -1,4 +1,4 @@
-export {loginPage, SetProfilUSer}
+export { loginPage, SetProfilUSer, showUserPage }
 
 const loginPage = /*html*/`
 <div class="container">
@@ -68,11 +68,25 @@ const loginPage = /*html*/`
 </div>
 `
 
+function showUserPage() {
+    const app = document.getElementById('app');
+    app.innerHTML = /* html */`
+    <div id="main-container">
+        <div id="menu-section"></div>
+        <div id="main-section">
+            <div id="header-bar"></div>
+            <div id="graph-section"></div>
+        </div>
+        <div id="profile-section"></div>
+    </div>
+    `;
+}
+
 function SetProfilUSer(userData) {
     const app = document.getElementById('app');
-    app.innerHTML = `
+    app.innerHTML = /* html */ `
       <h1>Welcome, ${userData[0].login}</h1>
       <button id="logout">Logout</button>
       <div id="graphs"></div>
     `;
-  }
+}
