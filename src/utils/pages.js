@@ -3,7 +3,9 @@ export {loginPage, SetProfilUSer}
 const loginPage = /*html*/`
 <div class="container">
     <form id="loginForm" class="login-form">
-        <h2>Login</h2>
+        <h1>Welcome</h1>
+        <span id="line"></span>
+        <h4>GraphQL</h4>
         <div class="input-group">
             <input type="text" id="username" placeholder="Username or Email" required />
         </div>
