@@ -1,4 +1,4 @@
-export { fetchUserData, showSlides}
+export { fetchUserData, showSlides }
 
 const fetchUserData = async () => {
   const jwt = localStorage.getItem('jwt');
@@ -11,9 +11,10 @@ const fetchUserData = async () => {
     body: JSON.stringify({
       query: `
           {
-            user {
+            user{
               id
               login
+              attrs
             }
           }
         `

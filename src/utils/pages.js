@@ -68,18 +68,61 @@ const loginPage = /*html*/`
 </div>
 `
 
-function showUserPage() {
+function showUserPage(userData) {
     const app = document.getElementById('app');
+    console.log(userData[0].attrs.gender);
+
     app.innerHTML = /* html */`
     <div id="main-container">
-        <div id="menu-section"></div>
+        <div id="menu-section">
+            <div id="home" class="btn-menu"></div>
+            <div id="pool" class="btn-menu"></div>
+            <div id="cursus" class="btn-menu"></div>
+            <div id="graph" class="btn-menu"></div>
+            <div id="groups" class="btn-menu"></div>
+            <div id="school" class="btn-menu"></div>
+            <div id="logout" class="btn-menu"></div>
+        </div>
         <div id="main-section">
-            <div id="header-bar"></div>
+            <div id="header-bar-container">
+                <div id="header-first-part">
+                    <div id="titre-date-container">
+                        <div id="titre">GraphQL Dashboard</div>
+                        <div id="date"></div>
+                    </div>
+                    <div id="dark-mode-toggle">
+                        <div id="light-mode"></div>
+                        <div id="dark-mode"></div>
+                    </div>
+                </div>
+                <div id="header-bar">
+                <div id="photo-user-hearder"></div>
+                    <div id="welcome-text">
+                        <span id="wecome-user">Welcome, Mr. &nbsp;<strong>${userData[0].attrs.lastName}</strong>.&nbsp;</span>
+                        <span id="text">Découvrez une nouvelle façon de visualiser vos progrès et accomplissements .</span>
+                    </div>
+                </div>
+            </div>
             <div id="graph-section"></div>
         </div>
         <div id="profile-section"></div>
     </div>
     `;
+
+    if (userData[0].attrs.gender === 'Feminin') {
+        document.getElementById('photo-user-hearder').classList.add('profile-feminin');
+    } else {
+        document.getElementById('photo-user-hearder').classList.add('profile-masculin');
+    }
+
+    function getCurrentDateFormatted() {
+        const currentDate = new Date();
+        const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+        const formattedDate = currentDate.toLocaleDateString('en-GB', options);
+        return formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
+    }
+
+    document.getElementById('date').textContent = getCurrentDateFormatted();
 }
 
 function SetProfilUSer(userData) {

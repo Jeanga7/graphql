@@ -28,6 +28,61 @@
     border-radius: 30px;
     box-shadow: 0 2px 8px 2px rgba(0, 0, 0, 0.5);
     background-color: rgb(200, 235, 245);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+#home {
+    width: 70%;
+    height: 9%;
+    margin-top: 30%;
+    background-image: url('../img/home-icon.png');
+    background-size: cover;
+}
+
+.btn-menu{
+    width: 70%;
+    height: 9%;
+    background-size: cover;
+    cursor: pointer;
+    border: 1px solid rgb(199, 194, 194);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, border-radius 0.3s ease, box-shadow 0.3s ease; 
+}
+
+.btn-menu:hover{
+    background-color: blanchedalmond;
+    border-radius: 15px;
+    box-shadow: 0 2px 12px 2px rgba(0, 0, 0, 0.5);
+}
+
+#pool {
+    background-image: url('../img/pool-icon.png');
+}
+
+#cursus {
+    background-image: url('../img/cursus-icon.png');
+}
+
+#graph {
+    background-image: url('../img/graph-icon.png');
+}
+
+#groups {
+    background-image: url('../img/groups-icon.png');
+}
+
+#school {
+    background-image: url('../img/home-icon.png');
+}
+
+#logout {
+    position: absolute;
+    bottom: 3%;
+    background-image: url('../img/logout-icon.png');
 }
 
 #main-section {
@@ -38,13 +93,137 @@
     flex-direction: column;
 }
 
-#header-bar{
+#header-bar-container {
     width: 100%;
     height: 40%;
-    background-color: black;
+    position: relative;
 }
 
-#graph-section{
+#header-first-part {
+    width: 100%;
+    height: 40%;
+    display: flex;
+    flex-direction: row;
+}
+
+#titre-date-container {
+    width: 88%;
+    height: 100%;
+    margin-left: 3%;
+    display: flex;
+    flex-direction: column;
+}
+
+#titre {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    align-items: end;
+    font-size: xx-large;
+    font-weight: bolder;
+}
+
+#date {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    align-items: center;
+    font-weight: 900;
+    color: rgba(4, 38, 217, 1);
+}
+
+#dark-mode-toggle {
+    width: 5%;
+    height: 20%;
+    display: flex;
+    flex-direction: row;
+    border-radius: 20px;
+    padding: 0.2%;
+    margin-left: 3%;
+    margin-top: 2%;
+    gap: 5%;
+    border: 3px solid rgb(179, 173, 173);
+    box-shadow: 0 2px 12px 2px rgba(0, 0, 0, 0.5);
+    background-color: white;
+}
+
+#light-mode {
+    height: 100%;
+    width: 50%;
+    border-radius: 50%;
+    background-image: url('../img/light-icon.png');
+    background-size: cover;
+}
+
+#dark-mode {
+    height: 100%;
+    width: 50%;
+    border-radius: 50%;
+    background-image: url('../img/dark-icon.png');
+    background-size: cover;
+}
+
+#header-bar {
+    width: 95%;
+    height: 55%;
+    background-color: rgb(217, 217, 217);
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 2%;
+    border-radius: 40px;
+    box-shadow: 0 2px 8px 2px rgba(0, 0, 0, 0.5);
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#photo-user-hearder {
+    width: 25%;
+    height: 150%;
+    position: absolute;
+    bottom: 0;
+    right: 5%;
+    background-size: cover;
+    z-index: 1;
+    transform: scaleX(-1);
+}
+
+.profile-masculin {
+    background-image: url('../img/profileMan.png');
+}
+
+.profile-feminin {
+    background-image: url('../img/profileWoman.png');
+}
+
+#welcome-text {
+    width: 68%;
+    height: 100%;
+    margin-left: 1%;
+    display: flex;
+    flex-direction: column;
+}
+
+#wecome-user {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: end;
+    font-size: xx-large;
+}
+
+#text {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    font-size: 16px;
+    font-weight: bolder;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+#graph-section {
     width: 100%;
     height: 57%;
     background-color: green;
