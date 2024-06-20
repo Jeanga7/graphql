@@ -71,7 +71,7 @@ const loginPage = /*html*/`
 function showUserPage(userData) {
     const app = document.getElementById('app');
     console.log(userData[0].attrs.gender);
-
+/*  */
     app.innerHTML = /* html */`
     <div id="main-container">
         <div id="menu-section">
@@ -83,6 +83,7 @@ function showUserPage(userData) {
             <div id="school" class="btn-menu"></div>
             <div id="logout" class="btn-menu"></div>
         </div>
+
         <div id="main-section">
             <div id="header-bar-container">
                 <div id="header-first-part">
@@ -103,7 +104,16 @@ function showUserPage(userData) {
                     </div>
                 </div>
             </div>
-            <div id="graph-section"></div>
+
+            <div id="graph-section-container">
+                <div id="graph-info">
+                    <div id="graph-title">SKILLS GRAPH</div>
+                    <div id="infos">ipsum Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius magni dicta eveniet aliquid velit tempora sunt, omnis sapiente
+                    assumenda labore amet ratione et ullam reprehenderit, perspiciatis veniam explicabo libero cumque.</div>
+                </div>
+                <div id="graph-section"></div>
+            </div>
+
         </div>
         <div id="profile-section"></div>
     </div>
