@@ -71,7 +71,6 @@ const loginPage = /*html*/`
 function showUserPage(userData) {
     const app = document.getElementById('app');
     console.log(userData[0].attrs.gender);
-/*  */
     app.innerHTML = /* html */`
     <div id="main-container">
         <div id="menu-section">
@@ -115,14 +114,43 @@ function showUserPage(userData) {
             </div>
 
         </div>
-        <div id="profile-section"></div>
+
+        <div id="profile-section">
+            <div id="profile-card-container">
+                <div id="first-part-profile">
+                    <div id="id-profile-container">
+                        <div id="username-container">
+                            <div id="firstname">Jean Gabriel</div>
+                            <div id="lastname">GOUDIABY</div>
+                        </div>
+                        <div id="photo-prolile-container">
+                            <div id="cercle-photo"></div>
+                            <div id="photo-profile"></div>
+                            <div id="user-drapeau"></div>
+                        </div>
+                    </div>
+                    <div id="current-rank">Recuperer Rank</div>
+                </div>
+                <div id="second-part-profile">
+                    <div id="total-xp"></div>
+                    <div id="level"></div>
+                    <div id="ratio"></div>
+                </div>
+            </div>
+
+            <div id="xp-board-container">
+                <div id="xp-board-title"></div>
+                <div id="xp-board-graph"></div>
+            </div>
+        </div>
     </div>
     `;
-
     if (userData[0].attrs.gender === 'Feminin') {
         document.getElementById('photo-user-hearder').classList.add('profile-feminin');
+        document.getElementById('photo-profile').classList.add('profile-feminin2');
     } else {
         document.getElementById('photo-user-hearder').classList.add('profile-masculin');
+        document.getElementById('photo-profile').classList.add('profile-masculin2');
     }
 
     function getCurrentDateFormatted() {

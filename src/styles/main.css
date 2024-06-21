@@ -1,10 +1,18 @@
+:root {
+    --bg-color-main: rgb(217, 217, 217);
+    --bg-color-secondary: rgb(238, 241, 242);
+    --bg-color-tertiary: rgb(200, 235, 245);
+    --bg-color-quaternary: rgb(52, 159, 153);
+    --shadow: 0 2px 8px 2px rgba(0, 0, 0, 0.5);
+}
+
 #app {
     height: 100vh;
     width: 100vw;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgb(217, 217, 217);
+    background-color: var(--bg-color-main);
     margin: 0;
 }
 
@@ -17,8 +25,8 @@
     width: 95vw;
     border-radius: 60px;
     gap: 10px;
-    background-color: rgb(238, 241, 242);
-    border: 15px solid rgb(200, 235, 245);
+    background-color: var(--bg-color-secondary);
+    border: 15px solid var(--bg-color-tertiary);
 }
 
 #menu-section {
@@ -26,8 +34,8 @@
     height: 96%;
     margin-left: 1%;
     border-radius: 30px;
-    box-shadow: 0 2px 8px 2px rgba(0, 0, 0, 0.5);
-    background-color: rgb(200, 235, 245);
+    box-shadow: var(--shadow);
+    background-color: var(--bg-color-tertiary);
     position: relative;
     display: flex;
     flex-direction: column;
@@ -56,7 +64,7 @@
 .btn-menu:hover {
     background-color: blanchedalmond;
     border-radius: 15px;
-    box-shadow: 0 2px 12px 2px rgba(0, 0, 0, 0.5);
+    box-shadow: var(--shadow);
 }
 
 #pool {
@@ -166,12 +174,12 @@
 #header-bar {
     width: 95%;
     height: 55%;
-    background-color: rgb(217, 217, 217);
+    background-color: var(--bg-color-main);
     position: absolute;
     bottom: 0;
     margin-bottom: 2%;
     border-radius: 40px;
-    box-shadow: 0 2px 8px 2px rgba(0, 0, 0, 0.5);
+    box-shadow: var(--shadow);
     left: 50%;
     transform: translateX(-50%);
 }
@@ -241,7 +249,7 @@
     flex-direction: column;
 }
 
-#graph-title{
+#graph-title {
     width: 100%;
     height: 20%;
     display: flex;
@@ -249,28 +257,28 @@
     justify-content: center;
     font-size: x-large;
     font-weight: bolder;
-    background-color: rgb(52, 159, 153);
+    background-color: var(--bg-color-quaternary);
     border-radius: 45px 10px 10px 10px;
     box-sizing: border-box;
-    box-shadow: 0 2px 8px 2px rgba(0, 0, 0, 0.5);
+    box-shadow: var(--shadow);
 }
 
-#infos{
+#infos {
     width: 100%;
     height: 78%;
     background-color: rgb(38, 226, 185);
-    border: 12px solid rgb(52, 159, 153);
+    border: 12px solid var(--bg-color-quaternary);
     background-color: white;
     border-radius: 10px 10px 10px 45px;
     box-sizing: border-box;
-    box-shadow: 0 2px 8px 2px rgba(0, 0, 0, 0.5);
+    box-shadow: var(--shadow);
     text-align: justify;
     padding: 8px;
     font-size: 16px;
     line-height: 1.5;
     overflow-wrap: break-word;
     word-break: break-all;
-    white-space: normal; 
+    white-space: normal;
 }
 
 #graph-section {
@@ -278,16 +286,164 @@
     height: 100%;
     margin-bottom: 1%;
     border-radius: 15px 45px 45px 15px;
-    border: 12px solid rgb(52, 159, 153);
-    background-color: rgb(217, 217, 217);
+    border: 12px solid var(--bg-color-quaternary);
+    background-color: var(--bg-color-main);
     box-sizing: border-box;
-    box-shadow: 0 2px 8px 2px rgba(0, 0, 0, 0.5);
+    box-shadow: var(--shadow);
 }
 
 #profile-section {
     width: 25%;
     height: 100%;
     border-radius: 0 48px 48px 0;
-    box-shadow: 0 2px 6px 1px rgba(0, 0, 0, 0.5);
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     background-color: white;
+}
+
+#profile-card-container {
+    height: 40%;
+    width: 90%;
+    margin: auto;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#first-part-profile{
+    height: 68%;
+    width: 100%;
+    background-color: rgb(50, 103, 201);
+    border-radius: 45px 45px 0 0;
+    box-shadow: var(--shadow);
+    background-color: var(--bg-color-quaternary);
+    display: flex;
+    flex-direction: column;
+}
+
+#id-profile-container{
+    height: 80%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+#username-container{
+    height: 100%;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+}
+
+#firstname{
+    height: 70%;
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    text-align: center;
+    font-size: 20px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#lastname{
+    height: 30%;
+    width: 100%;
+    text-align: center;
+    font-size: 25px;
+    font-weight: bolder;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#photo-prolile-container {
+    height: 100%;
+    width: 50%;
+    background-color: rgb(59, 218, 218);
+    display: flex;
+    align-items: end;
+    justify-content: center;
+    position: relative;
+}
+
+#cercle-photo {
+    height: 75%;
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    border: 3px solid rgb(39, 38, 38);
+    box-shadow: inset 0 0 8px 4px rgba(0, 0, 0, 0.5),
+    0 0 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+#photo-profile {
+    position: absolute;
+    height: 85%;
+    width: 80%;
+    bottom: 10%;
+    background-size: cover;
+    background-position: center;
+}
+
+.profile-masculin2 {
+    background-image: url('../img/profileMan2.png');
+}
+
+.profile-feminin2 {
+    background-image: url('../img/profileWoman2.png');
+}
+
+#user-drapeau {
+    /* height: 40px;
+    width: 40px; 
+    background-image: url('your-flag-url.jpg'); 
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%; */
+}
+
+#current-rank {
+    height: 20%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 25px;
+    letter-spacing: 2px;
+    font-weight: bolder;
+    color: rgb(77, 76, 76);
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-3px);
+    }
+}
+
+#second-part-profile{
+    height: 29%;
+    width: 100%;
+    border-radius: 0 0 45px 45px;
+    box-shadow: var(--shadow);
+    background-color: var(--bg-color-tertiary);
+}
+
+#xp-board-container {
+    height: 52%;
+    width: 90%;
+    background-color: rgb(243, 160, 82);
+    margin: auto;
+    margin-bottom: 20px;
+    border-radius: 45px;
 }
