@@ -158,7 +158,7 @@ function createProfileSection(data) {
                         <div id="user-drapeau"></div>
                     </div>
                 </div>
-                <div id="current-rank">Recuperer Rank</div>
+                <div id="current-rank">${setCurrentRank(data.event_user[0].level)}</div>
             </div>
             <div id="second-part-profile">
                 <div id="total-xp-container">
@@ -191,11 +191,30 @@ function createProfileSection(data) {
     </div>`;
 }
 
+function setCurrentRank(level) {
+    let currentRank;
+    if (level > 50) {
+        currentRank = 'Junior developer';
+    } else if (level > 40) {
+        currentRank = 'Basic developer';
+    } else if (level > 30) {
+        currentRank = 'Assistant developer';
+    } else if (level > 20) {
+        currentRank = 'Apprentice developer';
+    } else if (level > 10) {
+        currentRank = 'Beginner developer';
+    } else {
+        currentRank = 'Aspiring developer';
+    }
+    return currentRank;
+}
+
+
 function formatAmount(amount) {
     let amountInKB = amount / 1000;
     let displayAmount = amountInKB;
     let displayUnit = 'KB';
-    
+
     if (amountInKB > 1000) {
         displayAmount = amountInKB / 1000;
         displayUnit = 'MB';
