@@ -202,7 +202,7 @@ function formatAmount(amount) {
         displayAmount = Math.floor(displayAmount * 100) / 100;
     }
 
-    return `${displayAmount} ${displayUnit}`;
+    return `${displayAmount.toFixed(displayUnit === 'MB' ? 2 : 0)} ${displayUnit}`;
 }
 
 function setGender(gender) {
