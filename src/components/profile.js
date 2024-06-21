@@ -1,9 +1,8 @@
-import { SetProfilUSer, showUserPage } from '../utils/pages.js';
+import { showUserPage } from '../utils/pages.js';
 import { showGraphs } from './graphs.js';
 
 export const showProfile = (userData) => {
   showUserPage(userData)
-  // SetProfilUSer(userData);
 
   handleLogout();
   showGraphs();

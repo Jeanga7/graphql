@@ -11,17 +11,33 @@ const fetchUserData = async () => {
     body: JSON.stringify({
       query: `
           {
-            user{
+            user {
               id
               login
+              auditRatio
               attrs
+            }
+            event_user(
+              where: {event: {path: {_eq: "/dakar/div-01"}}}
+              order_by: {user: {login: asc}}
+            ) {
+              level
+            }
+            transaction_aggregate(
+              where: {transaction_type: {type: {_eq: "xp"}}, event: {path: {_eq: "/dakar/div-01"}}}
+            ) {
+              aggregate {
+                sum {
+                  amount
+                }
+              }
             }
           }
         `
     })
   });
   const data = await response.json();
-  return data.data.user;
+  return data.data;
 };
 
 let slideIndex = 0;
