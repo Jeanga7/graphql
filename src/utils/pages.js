@@ -1,6 +1,6 @@
-export { loginPage, SetProfilUSer, showUserPage }
+export { loginPage, SetProfilUSer, showUserPage };
 
-const loginPage = /*html*/`
+const loginPage = /*html*/ `
 <div class="container">
     <form id="loginForm" class="login-form">
         <h1>Welcome</h1>
@@ -66,12 +66,14 @@ const loginPage = /*html*/`
         </div>
     </div>
 </div>
-`
+`;
 
 function showUserPage(userData) {
-    const app = document.getElementById('app');
-    console.log(userData[0].attrs.gender);
-    app.innerHTML = /* html */`
+  const app = document.getElementById("app");
+  console.log(userData[0].attrs.gender);
+  let title = userData[0].attrs.gender == 'Masculin' ? 'Mr' : 'Mme';
+  
+  app.innerHTML = /* html */ `
     <div id="main-container">
         <div id="menu-section">
             <div id="home" class="btn-menu"></div>
@@ -98,7 +100,8 @@ function showUserPage(userData) {
                 <div id="header-bar">
                 <div id="photo-user-hearder"></div>
                     <div id="welcome-text">
-                        <span id="wecome-user">Welcome, Mr. &nbsp;<strong>${userData[0].attrs.lastName}</strong>.&nbsp;</span>
+                        <span id="wecome-user">Welcome, ${title} &nbsp;<strong>${userData[0]
+    .attrs.lastName}</strong>.&nbsp;</span>
                         <span id="text">Découvrez une nouvelle façon de visualiser vos progrès et accomplissements .</span>
                     </div>
                 </div>
@@ -132,9 +135,27 @@ function showUserPage(userData) {
                     <div id="current-rank">Recuperer Rank</div>
                 </div>
                 <div id="second-part-profile">
-                    <div id="total-xp"></div>
-                    <div id="level"></div>
-                    <div id="ratio"></div>
+                    <div id="total-xp-container">
+                        <div id="xp-title">Total XP</div>
+                        <div id="xp-bloc">
+                            <div id="xp-icon"></div>
+                            <div id="xp-value"></div>
+                        </div>
+                    </div>
+                    <div id="level-container">
+                        <div id="level-title">Level</div>
+                        <div id="level-bloc">
+                            <div id="level-icon"></div>
+                            <div id="level-value"></div>
+                        </div>
+                    </div>
+                    <div id="ratio-container">
+                        <div id="ratio-title">Ratio</div>
+                        <div id="ratio-bloc">
+                            <div id="ratio-icon"></div>
+                            <div id="ratio-value"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -145,27 +166,73 @@ function showUserPage(userData) {
         </div>
     </div>
     `;
-    if (userData[0].attrs.gender === 'Feminin') {
-        document.getElementById('photo-user-hearder').classList.add('profile-feminin');
-        document.getElementById('photo-profile').classList.add('profile-feminin2');
-    } else {
-        document.getElementById('photo-user-hearder').classList.add('profile-masculin');
-        document.getElementById('photo-profile').classList.add('profile-masculin2');
-    }
 
-    function getCurrentDateFormatted() {
-        const currentDate = new Date();
-        const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
-        const formattedDate = currentDate.toLocaleDateString('en-GB', options);
-        return formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
-    }
+  setGender(userData[0].attrs.gender);
 
-    document.getElementById('date').textContent = getCurrentDateFormatted();
+  setNationality(userData[0].attrs.nationality1.toLowerCase());
+
+  document.getElementById("date").textContent = getCurrentDateFormatted();
+}
+
+function setGender(gender) {
+  if (gender === "Féminin") {
+    document
+      .getElementById("photo-user-hearder")
+      .classList.add("profile-feminin");
+    document.getElementById("photo-profile").classList.add("profile-feminin2");
+  } else {
+    document
+      .getElementById("photo-user-hearder")
+      .classList.add("profile-masculin");
+    document.getElementById("photo-profile").classList.add("profile-masculin2");
+  }
+}
+
+function getCurrentDateFormatted() {
+  const currentDate = new Date();
+  const options = {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  };
+  const formattedDate = currentDate.toLocaleDateString("en-GB", options);
+  return formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
+}
+
+function setNationality(nationality) {
+  switch (nationality) {
+    case "senegal":
+      document.getElementById("user-drapeau").classList.add("drapeau-sn");
+      break;
+    case "mali":
+      document.getElementById("user-drapeau").classList.add("drapeau-mali");
+      break;
+    case "guinea":
+      document.getElementById("user-drapeau").classList.add("drapeau-guinee");
+      break;
+    case "guinea bissau":
+      document
+        .getElementById("user-drapeau")
+        .classList.add("drapeau-guinee-bissau");
+      break;
+    case "congo":
+      document.getElementById("user-drapeau").classList.add("drapeau-congo");
+      break;
+    case "benin":
+      document.getElementById("user-drapeau").classList.add("drapeau-benin");
+      break;
+    default:
+      document
+        .getElementById("user-drapeau")
+        .classList.add("drapeau-internationale");
+      break;
+  }
 }
 
 function SetProfilUSer(userData) {
-    const app = document.getElementById('app');
-    app.innerHTML = /* html */ `
+  const app = document.getElementById("app");
+  app.innerHTML = /* html */ `
       <h1>Welcome, ${userData[0].login}</h1>
       <button id="logout">Logout</button>
       <div id="graphs"></div>
