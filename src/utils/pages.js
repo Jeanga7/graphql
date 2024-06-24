@@ -1,4 +1,4 @@
-import { createSVGDiagram } from "../components/graphs.js";
+import { createSkillsGraph } from "../components/graphs.js";
 
 export { loginPage, showUserPage };
 
@@ -86,7 +86,12 @@ function showUserPage(data) {
     document.getElementById('dark-mode-toggle').addEventListener('click', () => {
         document.body.classList.toggle('dark-mode');
     });
-    createSVGDiagram(data.skills)
+
+    document.getElementById("graph").addEventListener('click', () => {
+        createSkillsGraph(data.skills)
+        document.getElementById("graph-title").textContent = "SKILLS-GRAPH"
+        document.getElementById("infos").textContent = "Ce graphique représente les compétences techniques d'un utilisateur. Chaque barre montre un domaine avec le pourcentage de maîtrise. Survolez une barre pour voir les détails."
+    })
 
     setGender(data.user[0].attrs.gender);
 
@@ -99,9 +104,9 @@ function createMenuSection() {
     return /* html */ `
     <div id="menu-section">
         <div id="home" class="btn-menu"></div>
-        <div id="pool" class="btn-menu"></div>
-        <div id="cursus" class="btn-menu"></div>
         <div id="graph" class="btn-menu"></div>
+        <div id="cursus" class="btn-menu"></div>
+        <div id="pool" class="btn-menu"></div>
         <div id="groups" class="btn-menu"></div>
         <div id="school" class="btn-menu"></div>
         <div id="logout" class="btn-menu"></div>
@@ -137,8 +142,8 @@ function createGraphSection() {
     return /* html */`
     <div id="graph-section-container">
         <div id="graph-info">
-            <div id="graph-title">SKILLS GRAPH</div>
-            <div id="infos">ipsum Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius magni dicta eveniet aliquid velit tempora sunt, omnis sapiente assumenda labore amet ratione et ullam reprehenderit, perspiciatis veniam explicabo libero cumque.</div>
+            <div id="graph-title"></div>
+            <div id="infos"></div>
         </div>
         <div id="graph-section"></div>
     </div>`;

@@ -80,14 +80,6 @@ body.dark-mode #menu-section {
     gap: 10px;
 }
 
-#home {
-    width: 70%;
-    height: 9%;
-    margin-top: 30%;
-    background-image: url('../img/home-icon.png');
-    background-size: cover;
-}
-
 .btn-menu {
     width: 70%;
     height: 9%;
@@ -102,6 +94,11 @@ body.dark-mode #menu-section {
     background-color: blanchedalmond;
     border-radius: 15px;
     box-shadow: var(--shadow);
+}
+
+#home {
+    margin-top: 30%;
+    background-image: url('../img/home-icon.png');
 }
 
 #pool {
@@ -329,8 +326,6 @@ body.dark-mode #light-mode {
     font-size: 16px;
     line-height: 1.5;
     overflow-wrap: break-word;
-    word-break: break-all;
-    white-space: normal;
 }
 
 #graph-section {
@@ -638,21 +633,3 @@ body.dark-mode #light-mode {
 }
 
 /* ========== GRAPH ========== */
-
-/* .bar {
-    fill: blue;
-    transition: fill 0.3s;
-  }
-  .bar:hover {
-    fill: orange;
-  }
-  .amount {
-    display: none;
-    font-size: 12px;
-  }
-  .bar:hover + .amount {
-    display: block;
-  }
-  .bar:hover .amount {
-    display: block;
-  } */
