@@ -1,3 +1,5 @@
+import { createSVGDiagram } from "../components/graphs.js";
+
 export { loginPage, showUserPage };
 
 const loginPage = /*html*/ `
@@ -81,10 +83,10 @@ function showUserPage(data) {
         ${createProfileSection(data)}
     </div>
     `;
-
     document.getElementById('dark-mode-toggle').addEventListener('click', () => {
         document.body.classList.toggle('dark-mode');
     });
+    createSVGDiagram(data.skills)
 
     setGender(data.user[0].attrs.gender);
 
@@ -158,7 +160,7 @@ function createProfileSection(data) {
                         <div id="user-drapeau"></div>
                     </div>
                 </div>
-                <div id="current-rank">${setCurrentRank(data.event_user[0].level)}</div>
+                <div id="current-rank">${setCurrentRank(data.user[0].events[0].level)}</div>
             </div>
             <div id="second-part-profile">
                 <div id="total-xp-container">
@@ -172,7 +174,7 @@ function createProfileSection(data) {
                     <div id="level-title">Level</div>
                     <div id="level-bloc">
                         <div id="level-icon"></div>
-                        <div id="level-value">${data.event_user[0].level}</div>
+                        <div id="level-value">${data.user[0].events[0].level}</div>
                     </div>
                 </div>
                 <div id="ratio-container">

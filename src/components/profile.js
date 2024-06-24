@@ -1,11 +1,9 @@
 import { showUserPage } from '../utils/pages.js';
-import { showGraphs } from './graphs.js';
 
 export const showProfile = (userData) => {
   showUserPage(userData)
 
   handleLogout();
-  showGraphs();
 };
 
 function handleLogout() {

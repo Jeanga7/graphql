@@ -16,12 +16,13 @@ const fetchUserData = async () => {
               login
               auditRatio
               attrs
+              events(where: {eventId: {_eq: 56}}) {
+                level
+              }
             }
-            event_user(
-              where: {event: {path: {_eq: "/dakar/div-01"}}}
-              order_by: {user: {login: asc}}
-            ) {
-              level
+            skills: transaction(distinct_on: [type], where: {type: {_like: "%skill%"}}) {
+              amount
+              type
             }
             transaction_aggregate(
               where: {transaction_type: {type: {_eq: "xp"}}, event: {path: {_eq: "/dakar/div-01"}}}
@@ -51,3 +52,22 @@ function showSlides() {
   slides[slideIndex - 1].style.display = "block";
   setTimeout(showSlides, 5000);
 }
+
+/*======== Old Query ========*/
+/* 
+event_user(
+  where: {event: {path: {_eq: "/dakar/div-01"}}}
+  order_by: {user: {login: asc}}
+) {
+  level
+}
+
+
+query skills {
+  transaction(distinct_on: [type], where: {type: {_like: "%skill%"}}) {
+    amount
+    type
+  }
+}
+
+*/
