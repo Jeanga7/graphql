@@ -55,19 +55,31 @@ function showSlides() {
 
 /*======== Old Query ========*/
 /* 
-event_user(
-  where: {event: {path: {_eq: "/dakar/div-01"}}}
-  order_by: {user: {login: asc}}
-) {
-  level
-}
-
-
-query skills {
-  transaction(distinct_on: [type], where: {type: {_like: "%skill%"}}) {
+// pour diagramme xp en fonction du temps
+{
+  transaction(
+    order_by: {createdAt: asc}
+    where: {type: {_eq: "xp"}, eventId: {_eq: 56}}
+  ) {
+    createdAt
     amount
-    type
+    path
+    object{name}
   }
 }
 
+// pour diagramme projet faites par ordre
+ transaction(
+    order_by: {createdAt: asc}
+    where: {type: {_eq: "xp"}, eventId: {_eq: 56}, _and: [{path: {_nilike: "%checkpoint%"}}, {path: {_nilike: "%piscine-js-2%"}}]}
+  ) {
+    createdAt
+    object {
+      name
+    }
+  }
+
+
+  faire un diagramme du ratio projet faites/ projet restant
+  
 */
