@@ -1,4 +1,4 @@
-import { createSkillsGraph } from "../components/graphs.js";
+import { createDonutChart, createProjectsTimeline, createSkillsGraph } from "../components/graphs.js";
 
 export { loginPage, showUserPage };
 
@@ -83,7 +83,9 @@ function showUserPage(data) {
         ${createProfileSection(data)}
     </div>
     `;
-    
+    /* ============ PROJECTS BOARD ============ */
+    createDonutChart(data.allProject.length, 126);
+
     document.getElementById('dark-mode-toggle').addEventListener('click', () => {
         document.body.classList.toggle('dark-mode');
     });
@@ -92,6 +94,12 @@ function showUserPage(data) {
         createSkillsGraph(data.skills)
         document.getElementById("graph-title").textContent = "SKILLS-GRAPH"
         document.getElementById("infos").textContent = "Ce graphique représente les compétences techniques d'un utilisateur. Chaque barre montre un domaine avec le pourcentage de maîtrise. Survolez une barre pour voir les détails."
+    })
+
+    document.getElementById("cursus").addEventListener('click', () => {
+        createProjectsTimeline(data.allProject)
+        document.getElementById("graph-title").textContent = "TIMELINE"
+        document.getElementById("infos").textContent = "La timeline affiche les projets de l'utilisateur dans l'ordre chronologique. Chaque point représente un projet, avec le nom du projet comme étiquette. La distance horizontale entre les points représente la durée entre les projets, affichée en jours."
     })
 
     setGender(data.user[0].attrs.gender);
@@ -193,7 +201,7 @@ function createProfileSection(data) {
             </div>
         </div>
         <div id="xp-board-container">
-            <div id="xp-board-title">XP Board</div>
+            <div id="xp-board-title">PROJECTS</div>
             <div id="xp-board-graph"></div>
         </div>
     </div>`;
@@ -201,15 +209,15 @@ function createProfileSection(data) {
 
 function setCurrentRank(level) {
     let currentRank;
-    if (level > 50) {
+    if (level >= 50) {
         currentRank = 'Junior developer';
-    } else if (level > 40) {
+    } else if (level >= 40) {
         currentRank = 'Basic developer';
-    } else if (level > 30) {
+    } else if (level >= 30) {
         currentRank = 'Assistant developer';
-    } else if (level > 20) {
+    } else if (level >= 20) {
         currentRank = 'Apprentice developer';
-    } else if (level > 10) {
+    } else if (level >= 10) {
         currentRank = 'Beginner developer';
     } else {
         currentRank = 'Aspiring developer';

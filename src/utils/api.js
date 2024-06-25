@@ -24,6 +24,15 @@ const fetchUserData = async () => {
               amount
               type
             }
+            allProject : transaction(
+              order_by: {createdAt: asc}
+              where: {type: {_eq: "xp"}, eventId: {_eq: 56}, _and: [{path: {_nilike: "%checkpoint%"}}, {path: {_nilike: "%piscine-js-2%"}}]}
+            ) {
+              createdAt
+              object {
+                name
+              }
+            } 
             transaction_aggregate(
               where: {transaction_type: {type: {_eq: "xp"}}, event: {path: {_eq: "/dakar/div-01"}}}
             ) {
@@ -80,6 +89,7 @@ function showSlides() {
   }
 
 
-  faire un diagramme du ratio projet faites/ projet restant
+  faire un diagramme du ratio projet faites projet restant
+  all project = 126
   
 */
