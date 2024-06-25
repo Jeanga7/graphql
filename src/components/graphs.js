@@ -1,7 +1,9 @@
 export {
   createSkillsGraph,
   createDonutChart,
-  createProjectsTimeline
+  createProjectsTimeline,
+  createXpByProject,
+  generateHeatmap
 }
 /* ++++++++++ SKILLS GRAPH ++++++++++ */
 function createSkillsGraph(data) {
@@ -105,7 +107,7 @@ function createDonutChart(completedProjects, totalProjects) {
   backgroundCircle.setAttribute("r", radius);
   backgroundCircle.setAttribute("fill", "none");
   backgroundCircle.setAttribute("stroke", "#ffae00");
-  backgroundCircle.setAttribute("stroke-width", radius / 2);
+  backgroundCircle.setAttribute("stroke-width", radius / 2.3);
   svg.appendChild(backgroundCircle);
 
   // Arc for the completed projects
@@ -181,7 +183,7 @@ function createDonutChart(completedProjects, totalProjects) {
 
 }
 
-/* ++++++++++++    ++++++++++++ */
+/* ++++++++++++ PROJECTS TIMELINE ++++++++++++ */
 function createProjectsTimeline(projects) {
   // Convertir les données des projets au format accepté par Vis.js
   const items = projects.map(project => ({
@@ -191,7 +193,7 @@ function createProjectsTimeline(projects) {
   }));
 
   const container = document.getElementById('graph-section');
-  container.innerHTML =''
+  container.innerHTML = ''
   const options = {
     width: '95%',
     height: '95%',
@@ -205,3 +207,140 @@ function createProjectsTimeline(projects) {
 
   const timeline = new vis.Timeline(container, items, options);
 }
+
+/* ++++++++++++ XP BY PROJECTS ++++++++++++ */
+function createXpByProject(data) {
+  const dates = data.map(transaction => new Date(transaction.createdAt).toLocaleDateString());
+  const amounts = data.map(transaction => (transaction.amount / 1000).toFixed(1));
+
+  // Creating the chart
+  const canvas = document.createElement('canvas');
+  document.getElementById('graph-section').appendChild(canvas);
+
+  const ctx = canvas.getContext('2d');
+  const chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: dates,
+      datasets: [{
+        label: 'XP Obtained',
+        data: amounts,
+        borderColor: 'rgb(75, 192, 192)',
+        tension: 0.1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      },
+      plugins: {
+        tooltip: {
+          callbacks: {
+            title: (context) => {
+              const index = context[0].dataIndex;
+              const date = new Date(data[index].createdAt).toLocaleDateString();
+              return `${data[index].object.name} - ${date}`;
+            }
+          }
+        }
+      }
+    }
+  });
+}
+
+/* ++++++++++++ XP BY PROJECTS ++++++++++++ */
+
+
+// Générer la carte de chaleur
+function generateHeatmap(data) {
+
+  let groupInteractions = getGroupInteractions(data);
+  let auditorInteractions = getAuditorInteractions(data);
+
+  console.log("Interactions dans les groupes :", groupInteractions);
+  console.log("Interactions avec les auditeurs :", auditorInteractions);
+
+
+  createHeatmap(groupInteractions);
+
+}
+// Convertir les données d'interactions en format compatible avec Chart.js
+function formatDataForHeatmap(interactions) {
+  let formattedData = {
+    labels: [],
+    datasets: [{
+      data: [],
+      borderWidth: 1,
+      borderColor: '#fff',
+      backgroundColor: [],
+    }]
+  };
+
+  Object.keys(interactions).forEach((user, index) => {
+    formattedData.labels.push(user);
+    formattedData.datasets[0].data.push({ x: 0, y: index, value: interactions[user] });
+    formattedData.datasets[0].backgroundColor.push(`rgba(255, 99, 132, ${interactions[user] / 10})`);
+  });
+
+  return formattedData;
+}
+
+// Créer la carte de chaleur
+function createHeatmap(interactions) {
+  let formattedData = formatDataForHeatmap(interactions);
+
+  let ctx = document.getElementById('graph-section').getContext('2d');
+  let heatmap = new Chart(ctx, {
+    type: 'heatmap',
+    data: formattedData,
+    options: {
+      plugins: {
+        legend: {
+          display: false
+        }
+      },
+      scales: {
+        x: {
+          display: false
+        },
+        y: {
+          display: false
+        }
+      },
+      responsive: true,
+      maintainAspectRatio: false
+    }
+  });
+}
+
+
+function getGroupInteractions(data) {
+  let interactionsGroups = {};
+
+  data.groups.forEach(group => {
+    group.MyGroups.members.forEach(member => {
+      let login = member.user.login;
+      if (login !== data.MyUsername) {
+        interactionsGroups[login] = (interactionsGroups[login] || 0) + 1;
+      }
+    });
+  });
+
+  return interactionsGroups;
+}
+
+function getAuditorInteractions(data) {
+  let interactionsAuditors = {};
+
+  data.groups.forEach(group => {
+    group.MyGroups.MyAuditors.forEach(auditor => {
+      let login = auditor.auditor.login;
+      interactionsAuditors[login] = (interactionsAuditors[login] || 0) + 1;
+    });
+  });
+
+  return interactionsAuditors;
+}
+

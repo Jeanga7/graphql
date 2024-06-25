@@ -33,6 +33,38 @@ const fetchUserData = async () => {
                 name
               }
             } 
+            xpEvolution: transaction(
+              order_by: {createdAt: asc}
+              where: {type: {_eq: "xp"}, eventId: {_eq: 56}}
+            ) {
+              createdAt
+              amount
+              path
+              object{name}
+            }
+            interaction:user {
+              MyUsername:login
+              groups(
+                where: {group: {path: {_nlike: "%piscine-go%"}}}
+                order_by: {createdAt: asc}
+              ) {
+                MyGroups: group {
+                  object {
+                    name
+                  }
+                  members {
+                    user {
+                      login
+                    }
+                  }
+                  MyAuditors: auditors(where: {grade: {_is_null: false}}) {
+                    auditor {
+                      login
+                    }
+                  }
+                }
+              }
+            }
             transaction_aggregate(
               where: {transaction_type: {type: {_eq: "xp"}}, event: {path: {_eq: "/dakar/div-01"}}}
             ) {
@@ -64,32 +96,31 @@ function showSlides() {
 
 /*======== Old Query ========*/
 /* 
-// pour diagramme xp en fonction du temps
+
 {
-  transaction(
-    order_by: {createdAt: asc}
-    where: {type: {_eq: "xp"}, eventId: {_eq: 56}}
-  ) {
-    createdAt
-    amount
-    path
-    object{name}
+  user {
+    login
+    groups(
+      where: {group: {path: {_nlike: "%piscine-go%"}}}
+      order_by: {createdAt: asc}
+    ) {
+      MyGroups: group {
+        object {
+          name
+        }
+        members {
+          user {
+            login
+          }
+        }
+        MyAuditors: auditors(where: {grade: {_is_null: false}}) {
+          auditor {
+            login
+          }
+        }
+      }
+    }
   }
 }
 
-// pour diagramme projet faites par ordre
- transaction(
-    order_by: {createdAt: asc}
-    where: {type: {_eq: "xp"}, eventId: {_eq: 56}, _and: [{path: {_nilike: "%checkpoint%"}}, {path: {_nilike: "%piscine-js-2%"}}]}
-  ) {
-    createdAt
-    object {
-      name
-    }
-  }
-
-
-  faire un diagramme du ratio projet faites projet restant
-  all project = 126
-  
 */

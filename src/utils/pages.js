@@ -1,4 +1,4 @@
-import { createDonutChart, createProjectsTimeline, createSkillsGraph } from "../components/graphs.js";
+import { createDonutChart, createProjectsTimeline, createSkillsGraph, createXpByProject, generateHeatmap } from "../components/graphs.js";
 
 export { loginPage, showUserPage };
 
@@ -99,8 +99,16 @@ function showUserPage(data) {
     document.getElementById("cursus").addEventListener('click', () => {
         createProjectsTimeline(data.allProject)
         document.getElementById("graph-title").textContent = "TIMELINE"
-        document.getElementById("infos").textContent = "La timeline affiche les projets de l'utilisateur dans l'ordre chronologique. Chaque point représente un projet, avec le nom du projet comme étiquette. La distance horizontale entre les points représente la durée entre les projets, affichée en jours."
+        document.getElementById("infos").textContent = "La timeline affiche vos projets dans l'ordre chronologique. Chaque point représente un projet, avec le nom du projet comme étiquette. La distance horizontale entre les points représente la durée entre les projets."
     })
+
+    document.getElementById("school").addEventListener('click', () => {
+        createXpByProject(data.xpEvolution)
+        document.getElementById("graph-title").textContent = "XP BY PROJECT"
+        document.getElementById("infos").textContent = "Ce graphique montre la répartition des points d'expérience (XP) par projet, mesurée en kilobytes. Chaque barre représente un projet, indiquant le nombre total de XP acquis. Une vue succincte des réalisations clés."
+    })
+
+    generateHeatmap(data.interaction[0])
 
     setGender(data.user[0].attrs.gender);
 
@@ -115,9 +123,9 @@ function createMenuSection() {
         <div id="home" class="btn-menu"></div>
         <div id="graph" class="btn-menu"></div>
         <div id="cursus" class="btn-menu"></div>
-        <div id="pool" class="btn-menu"></div>
-        <div id="groups" class="btn-menu"></div>
         <div id="school" class="btn-menu"></div>
+        <div id="groups" class="btn-menu"></div>
+        <div id="pool" class="btn-menu"></div>
         <div id="logout" class="btn-menu"></div>
     </div>`;
 }
