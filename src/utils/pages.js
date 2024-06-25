@@ -1,4 +1,5 @@
 import { createDonutChart, createProjectsTimeline, createRadarChart, createSkillsGraph, createXpByProject, getAuditorInteractions, getGroupInteractions } from "../components/graphs.js";
+import { formatAmount, getCurrentDateFormatted, setCurrentRank, setGender, setNationality } from "./utils.js";
 
 export { loginPage, showUserPage };
 
@@ -73,6 +74,37 @@ const loginPage = /*html*/ `
 function showUserPage(data) {
     const app = document.getElementById("app");
 
+    const graphDescriptions = {
+        "XP BY PROJECT": "Ce graphique montre la répartition des points d'expérience (XP) par projet, mesurée en kilobytes. Chaque barre représente un projet, indiquant le nombre total de XP acquis. Une vue succincte des réalisations clés.",
+        "SKILLS-GRAPH": "Ce graphique représente les compétences techniques d'un utilisateur. Chaque barre montre un domaine avec le pourcentage de maîtrise. Survolez une barre pour voir les détails.",
+        "TIMELINE": "La timeline affiche vos projets dans l'ordre chronologique. Chaque point représente un projet, avec le nom du projet comme étiquette. La distance horizontale entre les points représente la durée entre les projets.",
+        "AUDITS INTERACTIONS": "Ce graphique présente les 10 utilisateurs avec lesquels vous avez le plus interagi lors de vos differents audits. Il met en évidence les connexions les plus significatives et les relations les plus actives durant votre cursus.",
+        "GROUPS INTERACTIONS": "Ce graphique présente les 10 utilisateurs avec lesquels vous avez le plus interagi dans les différents groupes. Il met en évidence les connexions les plus significatives et les relations les plus actives durant votre cursus."
+    };
+
+    const graphFunctions = {
+        "XP BY PROJECT": () => createXpByProject(data.xpEvolution),
+        "SKILLS-GRAPH": () => createSkillsGraph(data.skills),
+        "TIMELINE": () => createProjectsTimeline(data.allProject),
+        "AUDITS INTERACTIONS": () => createRadarChart(data.interaction[0], getAuditorInteractions),
+        "GROUPS INTERACTIONS": () => createRadarChart(data.interaction[0], getGroupInteractions)
+    };
+
+    const buttons = {
+        "home": "XP BY PROJECT",
+        "graph": "SKILLS-GRAPH",
+        "cursus": "TIMELINE",
+        "school": "AUDITS INTERACTIONS",
+        "groups": "GROUPS INTERACTIONS"
+    };
+
+
+    function updateGraph(title) {
+        graphFunctions[title]();
+        document.getElementById("graph-title").textContent = title;
+        document.getElementById("infos").textContent = graphDescriptions[title];
+    }
+
     app.innerHTML = /* html */ `
     <div id="main-container">
         ${createMenuSection()}
@@ -83,47 +115,20 @@ function showUserPage(data) {
         ${createProfileSection(data)}
     </div>
     `;
-    /* ============ PROJECTS BOARD ============ */
+
     createDonutChart(data.allProject.length, 126);
 
     document.getElementById('dark-mode-toggle').addEventListener('click', () => {
         document.body.classList.toggle('dark-mode');
     });
 
-    createXpByProject(data.xpEvolution)
-    document.getElementById("graph-title").textContent = "XP BY PROJECT"
-    document.getElementById("infos").textContent = "Ce graphique montre la répartition des points d'expérience (XP) par projet, mesurée en kilobytes. Chaque barre représente un projet, indiquant le nombre total de XP acquis. Une vue succincte des réalisations clés."
+    Object.keys(buttons).forEach(buttonId => {
+        document.getElementById(buttonId).addEventListener('click', () => {
+            updateGraph(buttons[buttonId]);
+        });
+    });
 
-    document.getElementById("home").addEventListener('click', () => {
-        createXpByProject(data.xpEvolution)
-        document.getElementById("graph-title").textContent = "XP BY PROJECT"
-        document.getElementById("infos").textContent = "Ce graphique montre la répartition des points d'expérience (XP) par projet, mesurée en kilobytes. Chaque barre représente un projet, indiquant le nombre total de XP acquis. Une vue succincte des réalisations clés."
-    })
-
-    document.getElementById("graph").addEventListener('click', () => {
-        createSkillsGraph(data.skills)
-        document.getElementById("graph-title").textContent = "SKILLS-GRAPH"
-        document.getElementById("infos").textContent = "Ce graphique représente les compétences techniques d'un utilisateur. Chaque barre montre un domaine avec le pourcentage de maîtrise. Survolez une barre pour voir les détails."
-    })
-
-    document.getElementById("cursus").addEventListener('click', () => {
-        createProjectsTimeline(data.allProject)
-        document.getElementById("graph-title").textContent = "TIMELINE"
-        document.getElementById("infos").textContent = "La timeline affiche vos projets dans l'ordre chronologique. Chaque point représente un projet, avec le nom du projet comme étiquette. La distance horizontale entre les points représente la durée entre les projets."
-    })
-
-    document.getElementById("school").addEventListener('click', () => {
-        createRadarChart(data.interaction[0], getAuditorInteractions);
-        document.getElementById("graph-title").textContent = "AUDITS INTERACTIONS"
-        document.getElementById("infos").textContent = "Ce graphique présente les 10 utilisateurs avec lesquels vous avez le plus interagi lors de vos differents audits. Il met en évidence les connexions les plus significatives et les relations les plus actives durant votre cursus."
-    })
-
-    document.getElementById("groups").addEventListener('click', () => {
-        createRadarChart(data.interaction[0], getGroupInteractions);
-        document.getElementById("graph-title").textContent = "GROUPS INTERACTIONS"
-        document.getElementById("infos").textContent = "Ce graphique présente les 10 utilisateurs avec lesquels vous avez le plus interagi dans les différents groupes. Il met en évidence les connexions les plus significatives et les relations les plus actives durant votre cursus."
-    })
-
+    updateGraph("XP BY PROJECT");
 
     setGender(data.user[0].attrs.gender);
 
@@ -140,7 +145,7 @@ function createMenuSection() {
         <div id="cursus" class="btn-menu"></div>
         <div id="school" class="btn-menu"></div>
         <div id="groups" class="btn-menu"></div>
-        <div id="pool" class="btn-menu"></div>
+        <div id="pool#" class="btn-menu#"></div>
         <div id="logout" class="btn-menu"></div>
     </div>`;
 }
@@ -230,89 +235,13 @@ function createProfileSection(data) {
     </div>`;
 }
 
-function setCurrentRank(level) {
-    let currentRank;
-    if (level >= 50) {
-        currentRank = 'Junior developer';
-    } else if (level >= 40) {
-        currentRank = 'Basic developer';
-    } else if (level >= 30) {
-        currentRank = 'Assistant developer';
-    } else if (level >= 20) {
-        currentRank = 'Apprentice developer';
-    } else if (level >= 10) {
-        currentRank = 'Beginner developer';
-    } else {
-        currentRank = 'Aspiring developer';
-    }
-    return currentRank;
-}
 
 
-function formatAmount(amount) {
-    let amountInKB = amount / 1000;
-    let displayAmount = amountInKB;
-    let displayUnit = 'KB';
 
-    if (amountInKB > 1000) {
-        displayAmount = amountInKB / 1000;
-        displayUnit = 'MB';
-        displayAmount = Math.floor(displayAmount * 100) / 100;
-    }
 
-    return `${displayAmount.toFixed(displayUnit === 'MB' ? 2 : 0)} ${displayUnit}`;
-}
 
-function setGender(gender) {
-    if (gender === "Féminin") {
-        document
-            .getElementById("photo-user-hearder")
-            .classList.add("profile-feminin");
-        document.getElementById("photo-profile").classList.add("profile-feminin2");
-    } else {
-        document
-            .getElementById("photo-user-hearder")
-            .classList.add("profile-masculin");
-        document.getElementById("photo-profile").classList.add("profile-masculin2");
-    }
-}
 
-function getCurrentDateFormatted() {
-    const currentDate = new Date();
-    const options = {
-        weekday: "long",
-        day: "numeric",
-        month: "long",
-        year: "numeric"
-    };
-    const formattedDate = currentDate.toLocaleDateString("en-GB", options);
-    return formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
-}
 
-function setNationality(nationality) {
-    switch (nationality) {
-        case "senegal":
-            document.getElementById("user-drapeau").classList.add("drapeau-sn");
-            break;
-        case "mali":
-            document.getElementById("user-drapeau").classList.add("drapeau-mali");
-            break;
-        case "guinea":
-            document.getElementById("user-drapeau").classList.add("drapeau-guinee");
-            break;
-        case "guinea bissau":
-            document.getElementById("user-drapeau").classList.add("drapeau-guinee-bissau");
-            break;
-        case "congo":
-            document.getElementById("user-drapeau").classList.add("drapeau-congo");
-            break;
-        case "benin":
-            document.getElementById("user-drapeau").classList.add("drapeau-benin");
-            break;
-        default:
-            document.getElementById("user-drapeau").classList.add("drapeau-internationale");
-            break;
-    }
-}
+
 
 
