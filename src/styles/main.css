@@ -304,6 +304,7 @@ body.dark-mode #light-mode {
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
     font-size: x-large;
     font-weight: bolder;
     text-shadow: var(--text-shadow);

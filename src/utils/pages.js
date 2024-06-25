@@ -1,4 +1,4 @@
-import { createDonutChart, createProjectsTimeline, createSkillsGraph, createXpByProject, generateHeatmap } from "../components/graphs.js";
+import { createDonutChart, createProjectsTimeline, createRadarChart, createSkillsGraph, createXpByProject, getAuditorInteractions, getGroupInteractions } from "../components/graphs.js";
 
 export { loginPage, showUserPage };
 
@@ -90,6 +90,16 @@ function showUserPage(data) {
         document.body.classList.toggle('dark-mode');
     });
 
+    createXpByProject(data.xpEvolution)
+    document.getElementById("graph-title").textContent = "XP BY PROJECT"
+    document.getElementById("infos").textContent = "Ce graphique montre la répartition des points d'expérience (XP) par projet, mesurée en kilobytes. Chaque barre représente un projet, indiquant le nombre total de XP acquis. Une vue succincte des réalisations clés."
+
+    document.getElementById("home").addEventListener('click', () => {
+        createXpByProject(data.xpEvolution)
+        document.getElementById("graph-title").textContent = "XP BY PROJECT"
+        document.getElementById("infos").textContent = "Ce graphique montre la répartition des points d'expérience (XP) par projet, mesurée en kilobytes. Chaque barre représente un projet, indiquant le nombre total de XP acquis. Une vue succincte des réalisations clés."
+    })
+
     document.getElementById("graph").addEventListener('click', () => {
         createSkillsGraph(data.skills)
         document.getElementById("graph-title").textContent = "SKILLS-GRAPH"
@@ -103,12 +113,17 @@ function showUserPage(data) {
     })
 
     document.getElementById("school").addEventListener('click', () => {
-        createXpByProject(data.xpEvolution)
-        document.getElementById("graph-title").textContent = "XP BY PROJECT"
-        document.getElementById("infos").textContent = "Ce graphique montre la répartition des points d'expérience (XP) par projet, mesurée en kilobytes. Chaque barre représente un projet, indiquant le nombre total de XP acquis. Une vue succincte des réalisations clés."
+        createRadarChart(data.interaction[0], getAuditorInteractions);
+        document.getElementById("graph-title").textContent = "AUDITS INTERACTIONS"
+        document.getElementById("infos").textContent = "Ce graphique présente les 10 utilisateurs avec lesquels vous avez le plus interagi lors de vos differents audits. Il met en évidence les connexions les plus significatives et les relations les plus actives durant votre cursus."
     })
 
-    generateHeatmap(data.interaction[0])
+    document.getElementById("groups").addEventListener('click', () => {
+        createRadarChart(data.interaction[0], getGroupInteractions);
+        document.getElementById("graph-title").textContent = "GROUPS INTERACTIONS"
+        document.getElementById("infos").textContent = "Ce graphique présente les 10 utilisateurs avec lesquels vous avez le plus interagi dans les différents groupes. Il met en évidence les connexions les plus significatives et les relations les plus actives durant votre cursus."
+    })
+
 
     setGender(data.user[0].attrs.gender);
 

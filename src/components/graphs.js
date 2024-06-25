@@ -3,7 +3,9 @@ export {
   createDonutChart,
   createProjectsTimeline,
   createXpByProject,
-  generateHeatmap
+  createRadarChart,
+  getAuditorInteractions,
+  getGroupInteractions
 }
 /* ++++++++++ SKILLS GRAPH ++++++++++ */
 function createSkillsGraph(data) {
@@ -214,8 +216,10 @@ function createXpByProject(data) {
   const amounts = data.map(transaction => (transaction.amount / 1000).toFixed(1));
 
   // Creating the chart
+  const container = document.getElementById('graph-section')
+  container.innerHTML = '';
   const canvas = document.createElement('canvas');
-  document.getElementById('graph-section').appendChild(canvas);
+  container.appendChild(canvas);
 
   const ctx = canvas.getContext('2d');
   const chart = new Chart(ctx, {
@@ -252,69 +256,62 @@ function createXpByProject(data) {
 
 /* ++++++++++++ XP BY PROJECTS ++++++++++++ */
 
+function createRadarChart(userData, getInteractionsFunction) {
+  const interactions = getTopInteractions(getInteractionsFunction(userData));
 
-// Générer la carte de chaleur
-function generateHeatmap(data) {
+  let labels = Object.keys(interactions);
+  let data = Object.values(interactions);
 
-  let groupInteractions = getGroupInteractions(data);
-  let auditorInteractions = getAuditorInteractions(data);
+  const container = document.getElementById("graph-section");
+  container.innerHTML = '';
+  const canvas = document.createElement('canvas');
+  container.appendChild(canvas);
 
-  console.log("Interactions dans les groupes :", groupInteractions);
-  console.log("Interactions avec les auditeurs :", auditorInteractions);
-
-
-  createHeatmap(groupInteractions);
-
-}
-// Convertir les données d'interactions en format compatible avec Chart.js
-function formatDataForHeatmap(interactions) {
-  let formattedData = {
-    labels: [],
-    datasets: [{
-      data: [],
-      borderWidth: 1,
-      borderColor: '#fff',
-      backgroundColor: [],
-    }]
-  };
-
-  Object.keys(interactions).forEach((user, index) => {
-    formattedData.labels.push(user);
-    formattedData.datasets[0].data.push({ x: 0, y: index, value: interactions[user] });
-    formattedData.datasets[0].backgroundColor.push(`rgba(255, 99, 132, ${interactions[user] / 10})`);
-  });
-
-  return formattedData;
-}
-
-// Créer la carte de chaleur
-function createHeatmap(interactions) {
-  let formattedData = formatDataForHeatmap(interactions);
-
-  let ctx = document.getElementById('graph-section').getContext('2d');
-  let heatmap = new Chart(ctx, {
-    type: 'heatmap',
-    data: formattedData,
+  const ctx = canvas.getContext('2d');
+  new Chart(ctx, {
+    type: 'radar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Interactions',
+        data: data,
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        borderColor: 'rgba(255, 99, 132, 1)',
+        borderWidth: 1
+      }]
+    },
     options: {
-      plugins: {
-        legend: {
-          display: false
-        }
-      },
       scales: {
-        x: {
-          display: false
-        },
-        y: {
-          display: false
+        r: {
+          ticks: {
+            beginAtZero: true
+          }
         }
       },
-      responsive: true,
-      maintainAspectRatio: false
+      plugins: {
+        zoom: {
+          zoom: {
+            wheel: {
+              enabled: true,
+            },
+            pinch: {
+              enabled: true
+            },
+            mode: 'xy'
+          }
+        }
+      }
     }
   });
 }
 
+function getTopInteractions(interactions, topN = 10) {
+  return Object.fromEntries(
+    Object.entries(interactions)
+      .sort(([, a], [, b]) => b - a)
+      .slice(0, topN)
+  );
+}
 
 function getGroupInteractions(data) {
   let interactionsGroups = {};
