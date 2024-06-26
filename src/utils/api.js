@@ -10,71 +10,77 @@ const fetchUserData = async () => {
     },
     body: JSON.stringify({
       query: `
-          {
-            user {
-              id
-              login
-              auditRatio
-              attrs
-              events(where: {eventId: {_eq: 56}}) {
-                level
-              }
+         {
+          user {
+            id
+            login
+            auditRatio
+            attrs
+            events(where: {eventId: {_eq: 56}}) {
+              level
             }
-            skills: transaction(distinct_on: [type], where: {type: {_like: "%skill%"}}, order_by:{amount:desc}) {
-              amount
-              type
+          }
+          skills: transaction(
+            distinct_on: type
+            where: {type: {_like: "%skill%"}}
+            order_by: [{type: asc}, {amount: desc}]
+          ) {
+            amount
+            type
+          }
+          allProject: transaction(
+            order_by: {createdAt: asc}
+            where: {type: {_eq: "xp"}, eventId: {_eq: 56}, _and: [{path: {_nilike: "%checkpoint%"}}, {path: {_nilike: "%piscine-js-2%"}}]}
+          ) {
+            createdAt
+            object {
+              name
             }
-            allProject : transaction(
+          }
+          xpEvolution: transaction(
+            order_by: {createdAt: asc}
+            where: {type: {_eq: "xp"}, eventId: {_eq: 56}}
+          ) {
+            createdAt
+            amount
+            path
+            object {
+              name
+            }
+          }
+          interaction: user {
+            MyUsername: login
+            groups(
+              where: {group: {path: {_nlike: "%piscine-go%"}}}
               order_by: {createdAt: asc}
-              where: {type: {_eq: "xp"}, eventId: {_eq: 56}, _and: [{path: {_nilike: "%checkpoint%"}}, {path: {_nilike: "%piscine-js-2%"}}]}
             ) {
-              createdAt
-              object {
-                name
-              }
-            } 
-            xpEvolution: transaction(
-              order_by: {createdAt: asc}
-              where: {type: {_eq: "xp"}, eventId: {_eq: 56}}
-            ) {
-              createdAt
-              amount
-              path
-              object{name}
-            }
-            interaction:user {
-              MyUsername:login
-              groups(
-                where: {group: {path: {_nlike: "%piscine-go%"}}}
-                order_by: {createdAt: asc}
-              ) {
-                MyGroups: group {
-                  object {
-                    name
-                  }
-                  members {
-                    user {
-                      login
-                    }
-                  }
-                  MyAuditors: auditors(where: {grade: {_is_null: false}}) {
-                    auditor {
-                      login
-                    }
+              MyGroups: group {
+                object {
+                  name
+                }
+                members {
+                  user {
+                    login
                   }
                 }
-              }
-            }
-            transaction_aggregate(
-              where: {transaction_type: {type: {_eq: "xp"}}, event: {path: {_eq: "/dakar/div-01"}}}
-            ) {
-              aggregate {
-                sum {
-                  amount
+                MyAuditors: auditors(where: {grade: {_is_null: false}}) {
+                  auditor {
+                    login
+                  }
                 }
               }
             }
           }
+          transaction_aggregate(
+            where: {transaction_type: {type: {_eq: "xp"}}, event: {path: {_eq: "/dakar/div-01"}}}
+          ) {
+            aggregate {
+              sum {
+                amount
+              }
+            }
+          }
+        }
         `
     })
   });
