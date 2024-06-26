@@ -20,7 +20,7 @@ const fetchUserData = async () => {
                 level
               }
             }
-            skills: transaction(distinct_on: [type], where: {type: {_like: "%skill%"}}) {
+            skills: transaction(distinct_on: [type], where: {type: {_like: "%skill%"}}, order_by:{amount:desc}) {
               amount
               type
             }
