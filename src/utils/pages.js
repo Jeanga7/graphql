@@ -234,14 +234,3 @@ function createProfileSection(data) {
         </div>
     </div>`;
 }
-
-
-
-
-
-
-
-
-
-
-

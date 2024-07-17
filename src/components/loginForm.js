@@ -23,11 +23,17 @@ export const showLoginForm = () => {
     });
 };
 
+const encodeBase64 = (str) => {
+    return btoa(unescape(encodeURIComponent(str)));
+};
+
+
 const authenticate = async (username, password) => {
+    const credentials = encodeBase64(`${username}:${password}`);
     const response = await fetch('https://learn.zone01dakar.sn/api/auth/signin', {
         method: 'POST',
         headers: {
-            'Authorization': 'Basic ' + btoa(`${username}:${password}`),
+            'Authorization': 'Basic ' + credentials,
             // 'Content-Type': 'application/json'
         }
     });
