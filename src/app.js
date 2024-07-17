@@ -10,8 +10,8 @@ const isAuthenticated = () => {
 };
 
 const init = async () => {
-  if (isAuthenticated()) {
-    const userData = await fetchUserData();
+  const userData = await fetchUserData();
+  if (isAuthenticated()&&userData!==undefined) {
     showProfile(userData);
   } else {
     showLoginForm();
